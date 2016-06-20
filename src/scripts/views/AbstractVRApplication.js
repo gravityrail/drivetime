@@ -7,8 +7,9 @@ import WebVRManager from 'webvr-manager/webvr-manager'
 
 class AbstractVRApplication{
     constructor(){
-        this._camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-        this._camera.position.z = 400;
+        this._camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+        // this._camera.position.z = 0;
+        // this._camera.position.x = 0;
 
         this._controls = new THREE.VRControls( this._camera );
 
@@ -58,7 +59,7 @@ class AbstractVRApplication{
 
     }
 
-    animate(timestamp) {
+    animate( timestamp ) {
         requestAnimationFrame( this.animate.bind(this) );
 
         this._controls.update();
