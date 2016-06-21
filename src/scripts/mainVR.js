@@ -25,10 +25,11 @@ class Main extends AbstractVRApplication {
         // position the camera
         this._camera.position.y = 25;
 
-        var roadMesh = Road( this._scene, this._renderer );
+        this.road = new Road( this._scene, this._renderer );
 
         // we want the camera elevation to track the terrain height
-        this.terrain = roadMesh;
+        this.terrain = this.road.getTerrain();
+        this.sky = this.road.getSky();
 
         this.fixCameraHeight();
 
@@ -49,8 +50,8 @@ class Main extends AbstractVRApplication {
         var camTween = new TWEEN.Tween( this._camera.position )
             .to( newCamera.position, 100000 )
             // .easing( TWEEN.Easing.Elastic.InOut )
-            // .onUpdate( onUpdateTween )
-            .onComplete( this.stopDriving )
+            .onUpdate( this.moveSky.bind( this ) )
+            .onComplete( this.stopDriving.bind( this ) )
             .start();
 
         this.animate();
@@ -88,6 +89,10 @@ class Main extends AbstractVRApplication {
 
         
 
+    }
+
+    moveSky() {
+        this.sky.position.copy( this._camera.position );
     }
 
     fixCameraHeight() {

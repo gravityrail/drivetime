@@ -135,6 +135,8 @@ function addSky( scene ) {
 	// directionalLight.shadowBias = -0.0001;
 	// directionalLight.shadowDarkness = 0.5;
 	// directionalLight.shadowCameraVisible = true;
+
+	return sky.mesh;
 }
 
 function createSkyOld() {
@@ -245,30 +247,56 @@ var TreesGeometry = function ( landscape ) {
 
 TreesGeometry.prototype = Object.create( THREE.BufferGeometry.prototype );
 
-function Road( scene, renderer ) {
-	// console.log("run");
-	// blue sky 
-	// renderer.setClearColor( 0xf0f0ff );
-	// scene.add( createLight() );
+class Road {
+	constructor( scene, renderer ) {
+		scene.fog = new THREE.FogExp2( 0x333340, 0.005 );
 
-	// var helper = new THREE.GridHelper( 5000, 5000, 0xffffff, 0xffffff );
-	// scene.add( helper );
+		this.earthMesh = createEarth( scene );
+		scene.add( this.earthMesh );
 
-	scene.fog = new THREE.FogExp2( 0x333340, 0.005 );
+		var treesMesh = createTrees( this.earthMesh );
+		scene.add( treesMesh );
 
-	var earthMesh = createEarth( scene );
-	scene.add( earthMesh );
+		var roadMesh = createRoad( this.earthMesh );
+		scene.add( roadMesh );
 
-	var treesMesh = createTrees( earthMesh );
-	scene.add( treesMesh );
+		// scene.add( createSky() );
+		this.skyMesh = addSky( scene );
+	}
 
-	var roadMesh = createRoad( earthMesh );
-	scene.add( roadMesh );
+	getTerrain() {
+		return this.earthMesh;
+	}
 
-	// scene.add( createSky() );
-	addSky( scene );
-
-	return earthMesh;
+	getSky() {
+		return this.skyMesh;
+	}
 }
+
+// function Road( scene, renderer ) {
+// 	// console.log("run");
+// 	// blue sky 
+// 	// renderer.setClearColor( 0xf0f0ff );
+// 	// scene.add( createLight() );
+
+// 	// var helper = new THREE.GridHelper( 5000, 5000, 0xffffff, 0xffffff );
+// 	// scene.add( helper );
+
+// 	scene.fog = new THREE.FogExp2( 0x333340, 0.005 );
+
+// 	var earthMesh = createEarth( scene );
+// 	scene.add( earthMesh );
+
+// 	var treesMesh = createTrees( earthMesh );
+// 	scene.add( treesMesh );
+
+// 	var roadMesh = createRoad( earthMesh );
+// 	scene.add( roadMesh );
+
+// 	// scene.add( createSky() );
+// 	addSky( scene );
+
+// 	return earthMesh;
+// }
 
 export default Road;
