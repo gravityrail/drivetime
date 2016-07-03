@@ -85,12 +85,12 @@ function addSky( scene ) {
 	scene.add( sky.mesh );
 	// scene.add( sky.meshWireframe );
 
-	var sunSphere = new THREE.Mesh(
-		new THREE.SphereBufferGeometry( 20000, 16, 8 ),
-		new THREE.MeshBasicMaterial( { color: 0xffffbb } )
-	);
-	sunSphere.position.y = -1000;
-	sunSphere.visible = true;
+	// var sunSphere = new THREE.Mesh(
+	// 	new THREE.SphereBufferGeometry( 20000, 16, 8 ),
+	// 	new THREE.MeshBasicMaterial( { color: 0xffffbb } )
+	// );
+	// sunSphere.position.y = -1000;
+	// sunSphere.visible = true;
 
 	// set up params
 	var uniforms = sky.uniforms;
@@ -100,26 +100,22 @@ function addSky( scene ) {
 	uniforms.mieCoefficient.value = effectController.mieCoefficient;
 	uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
 
-	var theta = Math.PI * (effectController.inclination - 0.5);
-	var phi = 2 * Math.PI * (effectController.azimuth - 0.5);
+	sky.calculateSunPosition( distance, effectController.inclination, effectController.azimuth );
 
-	sunSphere.position.x = distance * Math.cos(phi);
-	sunSphere.position.y = distance * Math.sin(phi) * Math.sin(theta);
-	sunSphere.position.z = distance * Math.sin(phi) * Math.cos(theta);
+	// sunSphere.visible = effectController.sun;
 
-	sunSphere.visible = effectController.sun;
-
-	sky.uniforms.sunPosition.value.copy(sunSphere.position);
+	
 
 	// scene.add( sunSphere );
 
 	// lights and shadows
 
+/*
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.75 );
 	directionalLight.position.set( sunSphere.position.x, sunSphere.position.y, sunSphere.position.z );
 	// directionalLight.position.set( 1, 1, 0.5 );
 	scene.add( directionalLight );
-
+*/
 	// directionalLight.castShadow = true;
 	// directionalLight.shadowMapWidth = 2048;
 	// directionalLight.shadowMapHeight = 2048;
@@ -136,7 +132,7 @@ function addSky( scene ) {
 	// directionalLight.shadowDarkness = 0.5;
 	// directionalLight.shadowCameraVisible = true;
 
-	return sky.mesh;
+	return sky;
 }
 
 function createSkyOld() {

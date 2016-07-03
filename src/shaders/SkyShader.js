@@ -39,6 +39,18 @@ THREE.ShaderLib[ 'sky' ] = {
 
 };
 
+function calculateSunPosition( distance, inclination, azimuth ) {
+	var theta = Math.PI * (inclination - 0.5);
+	var phi = 2 * Math.PI * (azimuth - 0.5);
+
+	var sunPosition = new THREE.Vector3(0,0,0);
+
+	sunPosition.x = distance * Math.cos(phi);
+	sunPosition.y = distance * Math.sin(phi) * Math.sin(theta);
+	sunPosition.z = distance * Math.sin(phi) * Math.cos(theta);
+	this.uniforms.sunPosition.value.copy(sunPosition);
+}
+
 THREE.Sky = function () {
 
 	var skyShader = THREE.ShaderLib[ "sky" ];
@@ -66,8 +78,11 @@ THREE.Sky = function () {
 
 	this.mesh = sphere;
 
+	this.calculateSunPosition = calculateSunPosition.bind( this );
+
 	// Expose variables
 	// this.mesh = skyMesh;
 	this.uniforms = skyUniforms;
 
 };
+

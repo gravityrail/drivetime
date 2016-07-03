@@ -329,13 +329,13 @@ void main()
 	vec3 retColor = pow(color,vec3(1.0/(1.2+(1.2*sunfade))));
 
 	//stars
-    float StarVal = snoise( vNormal * vec3( 80.0 ) ); // scale up the noise by multiplying the vector
+    //float StarVal = snoise( vNormal * vec3( 80.0 ) ); // scale up the noise by multiplying the vector
 
     // let's have a lower-frequency noise function to change the star brightness
-    StarVal = StarVal*0.8 + ( snoise( vNormal * vec3( 2.0 ) ) * 0.2 );
+    //StarVal = StarVal*0.8 + ( snoise( vNormal * vec3( 2.0 ) ) * 0.2 );
 
-    StarVal = pow( StarVal, 5.0 );
-	retColor += vec3( StarVal );
+    //StarVal = pow( StarVal, 5.0 );
+	//retColor += vec3( StarVal );
 
     gl_FragColor.rgb = retColor;
 

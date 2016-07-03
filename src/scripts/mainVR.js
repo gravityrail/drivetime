@@ -31,6 +31,8 @@ class Main extends AbstractVRApplication {
         this.terrain = this.road.getTerrain();
         this.sky = this.road.getSky();
 
+        console.log(this.sky.uniforms);
+
         this.fixCameraHeight();
 
         // console.log(this._camera);
@@ -52,6 +54,30 @@ class Main extends AbstractVRApplication {
             // .easing( TWEEN.Easing.Elastic.InOut )
             .onUpdate( this.moveSky.bind( this ) )
             .onComplete( this.stopDriving.bind( this ) )
+            .start();
+
+
+        var sunValue = {
+            inclination: 0,
+            azimuth: 0.25,
+            distance: 400000
+        };
+
+        var sunEnd = {
+            inclination: 0.49,
+            azimuth: 0.25,
+            distance: 400000
+        };
+
+        // var azimuth = this.sunPositionInput.azimuth;
+        var sunTween = new TWEEN.Tween( sunValue )
+            .to( sunEnd, 10000 )
+            // .easing( TWEEN.Easing.Elastic.InOut )
+            .onUpdate( function() {
+                this.sky.calculateSunPosition( sunValue.distance, sunValue.inclination, sunValue.azimuth );
+            }.bind(this) )
+            .yoyo( true )
+            .repeat( Infinity )
             .start();
 
         this.animate();
@@ -91,8 +117,13 @@ class Main extends AbstractVRApplication {
 
     }
 
+    // moveSun() {
+    //     console.log(this.sunPositionInput.azimuth);
+    //     
+    // }
+
     moveSky() {
-        this.sky.position.copy( this._camera.position );
+        this.sky.mesh.position.copy( this._camera.position );
     }
 
     fixCameraHeight() {
