@@ -15,7 +15,7 @@
     "html-webpack-plugin": "^1.7.0",
     "ify-loader": "mattdesl/ify-loader#fix-errors",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
     "@superguigui/wagner": "^0.1.13",
@@ -25,10 +25,10 @@
     "glslify": "^5.0.0",
     "glslify-fancy-imports": "^1.0.1",
     "glslify-hex": "^2.0.1",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.21",
     "raw-loader": "^0.5.1",
     "stats.js": "^0.16.0",
-    "three": "^0.73.0",
+    "three": "^0.177.0",
     "transform-loader": "^0.2.3",
     "tween.js": "^16.3.4"
   },
